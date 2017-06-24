@@ -64,8 +64,8 @@ EOS
 
         def self.execute
           verb = ARGV.shift
-          case verb
-          when "new", "create"
+          case verb.downcase
+          when "new", "create", "add"
             self.create
           when "list"
             self.list
