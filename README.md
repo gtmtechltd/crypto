@@ -31,7 +31,7 @@ Then trade
     $ crypto new txn --from kraken.GBP=150 --to kraken.BTC=0.08
 ```
 
-# some transactions have fees associated with them
+some transactions have fees associated with them
 
 ```
     $ crypto new txn --from kraken.BTC=0.08 --to ledger.BTC=0.078              # implicit fees of 0.0002 BTC
