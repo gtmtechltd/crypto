@@ -1,6 +1,6 @@
-class Parser
+module Gtmtech
   module Crypto
-    module Gtmtech
+    class Accounting
 
       VERSION = "0.0.1"
       DESCRIPTION = "crypto is a cli tool for simple accounting of cryptocurrencies"
