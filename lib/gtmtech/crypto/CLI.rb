@@ -24,10 +24,13 @@ module Gtmtech
             subcommand
         end
 
-        command_class = Subcommand.find subcommand
+        @@command_class = Subcommand.find subcommand
+        @@options       = @@command_class.parse
 
-        options = command_class.parse
+      end
 
+      def self.execute
+        @@command_class.execute
       end
 
       def self.subcommands

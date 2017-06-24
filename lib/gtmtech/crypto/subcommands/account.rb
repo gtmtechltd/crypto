@@ -8,6 +8,24 @@ module Gtmtech
 
       class Account < Subcommand
 
+        def self.description
+          "manage accounts"
+        end
+
+        def self.usage
+          <<-EOS
+Usage (crypto #{self.prettyname})
+
+crypto #{self.prettyname} new --name=<s> --currencies=<s> [--type=<s> --url=<s>]
+  - create a new account
+
+crypto #{self.prettyname} list
+  - list all accounts
+
+Options:
+EOS
+        end
+
         def self.options
           [{:name => :name,
             :description => "Name of the account",
@@ -18,22 +36,40 @@ module Gtmtech
             :short => 'c',
             :type => :string},
            {:name => :type,
-            :description => "Type of account - options are wallet,exchange,bank",
+            :description => "(optional) Type of account - options are wallet,exchange,bank",
             :short => 't',
+            :type => :string},
+           {:name => :url,
+            :description => "(optional) URL for account website",
+            :short => 'u',
             :type => :string}
           ]
         end
 
-        def self.create options
-          self.error "--name required" unless options[:name_given]
-          self.error "--currencies required" unless options[:currencies_given]
-          self.error "--type required" unless options[:type_given]
+        def self.create
+          self.error "--name required" unless @@options[:name_given]
+          self.error "--currencies required" unless @@options[:currencies_given]
 
-          Data.add_account( options[:name], options[:currencies], options[:type] )
+          Data.load
+          Data.add_account( @@options[:name], @@options[:currencies], @@options[:type], @@options[:url] )
+          Data.save
         end
 
-        def self.description
-          "manage accounts"
+        def self.list
+          Data.load
+          Data.list_accounts
+        end
+
+        def self.execute
+          verb = ARGV.shift
+          case verb
+          when "new", "create"
+            self.create
+          when "list"
+            self.list
+          else
+            self.error "account takes an action [new, list] . See --help for more info"
+          end
         end
 
       end

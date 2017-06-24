@@ -49,10 +49,10 @@ module Gtmtech
         me = self
         all = self.all_options
 
-        options = Trollop::options do
+        @@options = Trollop::options do
 
           version "gtmtech-crypto version " + Gtmtech::Crypto::VERSION.to_s
-          banner ["crypto #{me.prettyname}: #{me.description}", me.helptext, "Options:"].compact.join("\n\n")
+          banner "#{me.usage}\n\n"
 
           all[:options].each do |available_option|
 
@@ -68,38 +68,16 @@ module Gtmtech
 
           end
 
-          # stop_on Eyaml.subcommands
-
         end
-
-        if options[:verbose]
-          Hiera::Backend::Eyaml.verbosity_level += 1
-        end
-
-        if options[:trace]
-          Hiera::Backend::Eyaml.verbosity_level += 2
-        end
-
-        if options[:quiet]
-          Hiera::Backend::Eyaml.verbosity_level = 0
-        end
-
-        if options[:encrypt_method]
-          Hiera::Backend::Eyaml.default_encryption_scheme = options[:encrypt_method]
-        end
-
-        if all[:sources]
-          all[:sources].each do |source|
-            LoggingHelper::debug "Loaded config from #{source}"
-          end
-        end
-
-        puts options
 
       end
 
       def self.validate args
         args
+      end
+
+      def self.usage
+        "Usage: \ncrypto #{self.prettyname} [global-options] [options]\nDescription: #{self.description}"
       end
 
       def self.description
@@ -120,6 +98,12 @@ module Gtmtech
 
       def self.hidden?
         false
+      end
+
+      def self.error message
+        puts "Error:"
+        puts message
+        exit 1
       end
 
     end

@@ -10,3 +10,11 @@ rescue StandardError => e
   puts e.backtrace.join("\n")
   exit 1
 end
+
+begin
+  Gtmtech::Crypto::CLI.execute
+rescue StandardError => e
+  puts e.message
+  puts e.backtrace.join("\n")
+  exit 1
+end

@@ -10,10 +10,10 @@ module Gtmtech
           []
         end
 
-        def self.parse
+        def self.execute
           puts "Unknown command"
         end
-        
+
       end
 
     end

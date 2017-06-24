@@ -11,7 +11,7 @@ module Gtmtech
           []
         end
 
-        def self.parse
+        def self.execute
           puts "gtmtech-crypto v#{Gtmtech::Crypto::VERSION}"
         end
 

@@ -12,12 +12,12 @@ module Gtmtech
           []
         end
 
-        def self.parse
+        def self.execute
           puts <<-EOS
 Welcome to gtmtech-crypto #{Gtmtech::Crypto::VERSION} 
 
 Usage:
-crypto <subcommand> [global-opts] [subcommand-opts]
+crypto <subcommand> ... [global-opts] [subcommand-opts]
 
 Available subcommands:
 #{Gtmtech::Crypto::CLI.subcommands.collect {|command|
