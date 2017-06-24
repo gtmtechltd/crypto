@@ -13,7 +13,7 @@ module Gtmtech
         end
         unless File.exist? @@path
           File.open(@@path, 'w') do |file| 
-            file.write("---\naccounts: {}\ntransactions: []\n")
+            file.write("---\naccounts: {}\ntransactions: {}\n")
           end
         end
         @@document = YAML.load(File.read(@@path))
