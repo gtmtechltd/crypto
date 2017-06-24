@@ -83,4 +83,8 @@ Build the gem
     $ ./build.sh
 ```
 
+Disclaimer
+==========
+
+Please see LICENSE.TXT for usage of this software. 
 
