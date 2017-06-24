@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+
+require 'rubygems'
+require 'gtmtech/crypto/parser'
+
+begin
+  Gtmtech::Crypto::Parser.parse
+rescue StandardError => e
+  puts e.message
+  puts e.backtrace.join("\n")
+  exit 1
+end

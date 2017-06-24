@@ -12,7 +12,7 @@ Gem::Specification.new do |gem|
 
   gem.homepage      = "http://github.com/gtmtechltd/crypto"
   gem.files         = `git ls-files`.split($/).reject { |file| file =~ /^features.*$/ }
-  gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
+  gem.executables   << "crypto"
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
 end
