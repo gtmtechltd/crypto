@@ -6,7 +6,11 @@ module Gtmtech
     class Data
 
       def self.load
-        @@path = "#{ENV['HOME']}/.crypto.yaml"
+        if ENV['CRYPTO_PROFILE']
+          @@path = "#{ENV['HOME']}/.crypto.#{ENV['CRYPTO_PROFILE']}.yaml"
+        else
+          @@path = "#{ENV['HOME']}/.crypto.yaml"
+        end
         unless File.exist? @@path
           File.open(@@path, 'w') do |file| 
             file.write("---\naccounts: {}\ntransactions: []\n")
@@ -28,6 +32,7 @@ module Gtmtech
       end
 
       def self.list_accounts
+        puts "Accounts for profile \"#{ENV['CRYPTO_PROFILE'] || 'main'}\":"
         printf("%-10s %-10s %-60s\n", "name", "type", "currencies")
         puts "-" * 80
         @@document[ "accounts" ].each do |name, account_info|
@@ -63,6 +68,7 @@ module Gtmtech
       end
 
       def self.list_transactions
+        puts "Transactions for profile \"#{ENV['CRYPTO_PROFILE'] || 'main'}\":"
         printf("%-36s %-20s %-15s %-15s %-15s %-15s\n", "id", "date", "src account", "src amount", "dest account", "dest amount")
         puts "-" * 120
         @@document[ "transactions" ].each do |id, txn|
