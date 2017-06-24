@@ -13,6 +13,16 @@ in order that:
 * You can provide records for tax purposes
 
 
+Setup:
+======
+
+First install ruby/rubygems. Then install this
+
+```
+    gem install gtmtech-crypto
+```
+
+
 Usage:
 ======
 
