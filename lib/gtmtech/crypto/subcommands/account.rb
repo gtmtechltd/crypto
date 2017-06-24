@@ -51,7 +51,9 @@ EOS
           self.error "--currencies required" unless @@options[:currencies_given]
 
           Data.load
-          Data.add_account( @@options[:name], @@options[:currencies], @@options[:type], @@options[:url] )
+          @@options[:currencies].split(",").each do |currency|
+            Data.add_account( @@options[:name], currency, @@options[:type], @@options[:url] )
+          end
           Data.save
         end
 
