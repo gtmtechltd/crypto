@@ -1,4 +1,5 @@
 require 'gtmtech/crypto/subcommand'
+require 'gtmtech/crypto'
 
 module Gtmtech
   module Crypto
@@ -11,7 +12,7 @@ module Gtmtech
         end
 
         def self.parse
-          puts "Version:"
+          puts "gtmtech-crypto v#{Gtmtech::Crypto::VERSION}"
         end
 
       end

@@ -34,14 +34,18 @@ module Gtmtech
           require "gtmtech/crypto/subcommands/unknown_command"
           return Gtmtech::Crypto::Subcommands::UnknownCommand
         end          
-        command_module = Module.const_get('Gtmtech').const_get('Crypto').const_get('Cli').const_get('Subcommands')
+        command_module = Module.const_get('Gtmtech').const_get('Crypto').const_get('Subcommands')
         command_class = Utils.find_closest_class :parent_class => command_module, :class_name => commandname
-        command_class || Gtmtech::Crypto::Subcommands::UnknownCommand
+        if command_class
+          command_class
+        else
+          require "gtmtech/crypto/subcommands/unknown_command"
+          Gtmtech::Crypto::Subcommands::UnknownCommand
+        end
       end
 
       def self.parse
 
-        puts "Parsing"
         me = self
         all = self.all_options
 

@@ -4,7 +4,7 @@ module Gtmtech
   module Crypto
     module Subcommands
 
-      class NewAccount < Subcommand
+      class Account < Subcommand
 
         def self.options
           [{:name => :name,

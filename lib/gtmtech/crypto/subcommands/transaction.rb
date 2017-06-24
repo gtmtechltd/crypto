@@ -4,7 +4,7 @@ module Gtmtech
   module Crypto
     module Subcommands
 
-      class NewTransaction < Subcommand
+      class Transaction < Subcommand
 
         def self.options
           [{:name => :from,
