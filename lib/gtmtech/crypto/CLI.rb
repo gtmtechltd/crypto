@@ -1,5 +1,5 @@
 require 'gtmtech/crypto/utils'
-require 'gtmtech/crypto/cli/subcommand'
+require 'gtmtech/crypto/subcommand'
 
 module Gtmtech
   module Crypto
