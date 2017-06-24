@@ -34,7 +34,6 @@ module Gtmtech
         root_folder = File.dirname(__FILE__) + "/" + Array.new(num_class_hierarchy_levels).fill("..").join("/")
         class_folder = root_folder + "/" + classdir
         Dir[File.expand_path("#{class_folder}/*.rb")].uniq.each do |file|
-          LoggingHelper.trace "Requiring file: #{file}"
           require file
         end
       end

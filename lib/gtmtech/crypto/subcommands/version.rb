@@ -15,6 +15,10 @@ module Gtmtech
           puts "gtmtech-crypto v#{Gtmtech::Crypto::VERSION}"
         end
 
+        def self.description
+          "output version information"
+        end
+
       end
 
     end

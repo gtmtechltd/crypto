@@ -26,6 +26,10 @@ module Gtmtech
           ]
         end
 
+        def self.description
+          "manage accounts"
+        end
+
       end
 
     end

@@ -5,10 +5,12 @@ module Gtmtech
   module Crypto
     class CLI
 
+      attr_reader :subcommands
+
       def self.parse
 
-        Utils.require_dir 'hiera/backend/eyaml/subcommands'
-        subcommands = Utils.find_all_subclasses_of({ :parent_class => Gtmtech::Crypto::Subcommand }).collect {|classname| Utils.snakecase classname}
+        Utils.require_dir 'gtmtech/crypto/subcommands'
+        @@subcommands = Utils.find_all_subclasses_of({ :parent_class => Gtmtech::Crypto::Subcommands }).collect {|classname| Utils.snakecase classname}
 
         subcommand = ARGV.shift
         subcommand = case subcommand
@@ -22,11 +24,14 @@ module Gtmtech
             subcommand
         end
 
-        puts "Subcommand is #{subcommand}"
         command_class = Subcommand.find subcommand
 
         options = command_class.parse
 
+      end
+
+      def self.subcommands
+        @@subcommands
       end
 
     end
