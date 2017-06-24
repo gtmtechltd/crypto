@@ -1,8 +1,9 @@
 require 'base64'
 require 'yaml'
 require 'trollop'
+require 'gtmtech/crypto/subcommands/unknown_command'
 
-class Gtmtech
+module Gtmtech
   module Crypto
 
     class Subcommand

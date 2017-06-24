@@ -1,6 +1,6 @@
 require 'fileutils'
 
-class Gtmtech
+module Gtmtech
   module Crypto
     class Utils
 
