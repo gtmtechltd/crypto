@@ -66,7 +66,21 @@ Output pnl sheet
 Building
 ========
 
-* install chruby
-* install version 2.0.0 of ruby using chruby
-* run build.sh
+Install chruby and ruby-build
+
+* OSX: https://gist.github.com/andrewroycarter/6815905
+
+Install version 2.0.0 of ruby using chruby
+
+```
+       $ ruby-install ruby 2.0.0
+    or $ ruby-build ruby 2.0.0
+```
+
+Build the gem
+
+```
+    $ ./build.sh
+```
+
 
