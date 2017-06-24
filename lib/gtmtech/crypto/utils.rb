@@ -48,6 +48,16 @@ module Gtmtech
         candidates
       end 
 
+      def self.make_decimal digits
+        if digits.start_with? "."
+          "0#{digits}"
+        elsif digits =~ /^\d+$/
+          "#{digits}.0"
+        else
+          digits
+        end        
+      end
+
     end
   end
 end

@@ -1,4 +1,5 @@
 require 'securerandom'
+require 'gtmtech/crypto/utils'
 
 module Gtmtech
   module Crypto
@@ -34,8 +35,21 @@ module Gtmtech
         end
       end
 
+      def self.account_exists? name, currency
+        return false unless @@document[ "accounts" ].key? name
+        return false unless @@document[ "accounts" ][ name ][ "currencies" ].include? currency 
+        true
+      end
+
       def self.add_transaction date, source_account, source_currency, source_amount, dest_account, dest_currency, dest_amount, fees_account, fees_currency, fees_amount
-        id = SecureRandom.uuid
+        if date.downcase == "now"
+          date = Time.now.to_s.split(" ").take(2).join(",")
+        end
+
+        source_amount = Utils.make_decimal source_amount
+        dest_amount = Utils.make_decimal dest_amount
+
+        id = SecureRandom.uuid.to_s
         @@document[ "transactions" ][ id ] = { "date"            => date, 
                                                "source_account"  => source_account,
                                                "source_currency" => source_currency,
