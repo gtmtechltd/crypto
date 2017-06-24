@@ -63,4 +63,10 @@ Output pnl sheet
 ```
  
 
+Building
+========
+
+* install chruby
+* install version 2.0.0 of ruby using chruby
+* run build.sh
 
