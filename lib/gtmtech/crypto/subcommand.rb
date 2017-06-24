@@ -41,6 +41,7 @@ module Gtmtech
 
       def self.parse
 
+        puts "Parsing"
         me = self
         all = self.all_options
 
@@ -89,7 +90,7 @@ module Gtmtech
           end
         end
 
-        options
+        puts options
 
       end
 

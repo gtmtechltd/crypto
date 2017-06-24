@@ -22,6 +22,7 @@ module Gtmtech
             subcommand
         end
 
+        puts "Subcommand is #{subcommand}"
         command_class = Subcommand.find subcommand
 
         options = command_class.parse
