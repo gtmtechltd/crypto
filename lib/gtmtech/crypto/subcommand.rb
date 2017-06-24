@@ -1,7 +1,8 @@
 require 'base64'
 require 'yaml'
 require 'trollop'
-require 'gtmtech/crypto/subcommands/unknown_command'
+# require 'gtmtech/crypto/subcommands/unknown_command'
+require 'gtmtech/crypto'
 
 module Gtmtech
   module Crypto
@@ -28,14 +29,14 @@ module Gtmtech
 
       def self.find commandname = "unknown_command"
         begin
-          require "gtmtech/crypto/cli/subcommands/#{commandname.downcase}"
+          require "gtmtech/crypto/subcommands/#{commandname.downcase}"
         rescue Exception => e
-          require "gtmtech/crypto/cli/subcommands/unknown_command"
-          return Gtmtech::Crypto::Cli::Subcommands::UnknownCommand
+          require "gtmtech/crypto/subcommands/unknown_command"
+          return Gtmtech::Crypto::Subcommands::UnknownCommand
         end          
         command_module = Module.const_get('Gtmtech').const_get('Crypto').const_get('Cli').const_get('Subcommands')
         command_class = Utils.find_closest_class :parent_class => command_module, :class_name => commandname
-        command_class || Gtmtech::Crypto::Cli::Subcommands::UnknownCommand
+        command_class || Gtmtech::Crypto::Subcommands::UnknownCommand
       end
 
       def self.parse
@@ -45,7 +46,7 @@ module Gtmtech
 
         options = Trollop::options do
 
-          version "gtmtech-crypto version " + Gtmtech::Crypto::Accounting::VERSION.to_s
+          version "gtmtech-crypto version " + Gtmtech::Crypto::VERSION.to_s
           banner ["crypto #{me.prettyname}: #{me.description}", me.helptext, "Options:"].compact.join("\n\n")
 
           all[:options].each do |available_option|

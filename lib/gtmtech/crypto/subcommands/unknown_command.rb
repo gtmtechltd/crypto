@@ -1,3 +1,5 @@
+require 'gtmtech/crypto/subcommand'
+
 module Gtmtech
   module Crypto
     module Subcommands
