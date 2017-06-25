@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |gem|
   gem.name          = "gtmtech-crypto"
-  gem.version       = "0.0.6"
+  gem.version       = "0.0.7"
   gem.description   = "Simple tool for accounting of cryptocurrencies"
   gem.summary       = "Simple tool for accounting of cryptocurrencies"
   gem.author        = "Geoff Meakin"

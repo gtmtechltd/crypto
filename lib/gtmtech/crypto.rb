@@ -1,7 +1,7 @@
 module Gtmtech
   module Crypto
 
-    VERSION = "0.0.6"
+    VERSION = "0.0.7"
     DESCRIPTION = "crypto is a cli tool for simple accounting of cryptocurrencies"
 
   end

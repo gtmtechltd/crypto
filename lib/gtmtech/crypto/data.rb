@@ -89,29 +89,57 @@ module Gtmtech
         printf("%-20s %-10s %-20s\n", "account", "currency", "amount")
         puts "-" * 120
         fees = {}
+        currencies = {}
         @@document[ "accounts" ].each do | name, account_info |
           account_info[ "currencies" ].sort.each do | currency |
             decimal = "0.0"
             @@document[ "transactions" ].each do |id, txn|
+              # explicit fees
               if txn[ "fees_account" ] == name and txn[ "fees_currency" ] == currency
                 decimal = Utils.decimal_minus( decimal, txn[ "fees_amount" ] )
                 unless fees.key? currency
                   fees[ currency ] = "0.0"
                 end
-                fees[ currency ] = Utils.decimal_add( fees[currency], txn[ "fees_amount" ])
+                fees[ currency ] = Utils.decimal_add( fees[ currency ], txn[ "fees_amount" ])
               end
+
+              # account reconciliation
               if txn[ "source_account" ] == name and txn[ "source_currency" ] == currency
                 decimal = Utils.decimal_minus( decimal, txn[ "source_amount" ] )
+
+                # implicit fees
+                if txn[ "source_currency" ] == txn[ "dest_currency" ] and txn[ "source_amount" ] != txn[ "dest_amount" ]
+                  implicit_fees = Utils.decimal_minus( txn[ "source_amount" ], txn[ "dest_amount" ] )
+                  unless fees.key? currency
+                    fees[ currency ] = "0.0"
+                  end
+                  fees[ currency ] = Utils.decimal_add( fees[ currency ], implicit_fees )
+                end
+
               end
               if txn[ "dest_account" ] == name and txn[ "dest_currency" ] == currency
                 decimal = Utils.decimal_add( decimal, txn[ "dest_amount" ] )
               end
             end
+            unless currencies.key? currency
+              currencies[ currency ] = "0.0"
+            end
+            currencies[ currency ] = Utils.decimal_add( currencies[ currency ], decimal )
             printf( "%-20s %-10s %-20s\n", name, currency, decimal )
           end
         end
         fees.keys.sort.each do |currency|
+          unless currencies.key? currency
+            currencies[ currency ] = "0.0"
+          end
+          currencies[ currency ] = Utils.decimal_add( currencies[ currency ], fees[ currency ] )
           printf( "%-20s %-10s %-20s\n", "**FEES**", currency, fees[ currency ] )
+        end
+        puts ""
+        printf( "%-10s %-20s\n", "currency", "reconciliation" )
+        puts "-" * 120
+        currencies.keys.sort.each do |currency|
+          printf( "%-10s %-20s\n", currency, currencies[ currency ] )
         end
       end
 
