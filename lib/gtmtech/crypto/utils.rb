@@ -60,13 +60,24 @@ module Gtmtech
       end
 
       def self.decimal_add decimal1, decimal2
-        ( BigDecimal( decimal1 ) + BigDecimal( decimal2 ) ).to_s("F")
+        ( BigDecimal( decimal1 ) + BigDecimal( decimal2 ) ).truncate(8).to_s("F")
       end
 
       def self.decimal_minus decimal1, decimal2
-        ( BigDecimal( decimal1 ) - BigDecimal( decimal2 ) ).to_s("F")
+        ( BigDecimal( decimal1 ) - BigDecimal( decimal2 ) ).truncate(8).to_s("F")
       end
 
+      def self.decimal_multiply decimal1, decimal2, decimal3 = "1.0"
+        ( BigDecimal( decimal1 ) * BigDecimal( decimal2 ) * BigDecimal( decimal3 ) ).truncate(8).to_s("F")
+      end
+
+      def self.decimal_divide decimal1, decimal2
+        ( BigDecimal( decimal1 ) / BigDecimal( decimal2 ) ).truncate(8).to_s("F")
+      end
+
+      def self.decimal_equal? decimal1, decimal2
+        BigDecimal( decimal1 ) == BigDecimal( decimal2 )
+      end
     end
   end
 end

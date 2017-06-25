@@ -14,7 +14,7 @@ module Gtmtech
           <<-EOS
 Usage (crypto #{self.prettyname})
 
-crypto #{self.prettyname} new --date=<s> --from=<s> --to=<s> [--fees=<s>]
+crypto #{self.prettyname} new --date=<s> --from=<s> --to=<s> [--fees=<s>] [--references=<s>] [--percentage=<s>]
   - create a new transaction
 
 crypto #{self.prettyname} delete --id=<s>
@@ -51,7 +51,17 @@ EOS
            {:name => :id,
             :description => "Specify the id you wish to amend/delete in a delete operation",
             :short => 'i',
-            :type => :string}
+            :type => :string},
+           {:name => :references,
+            :description => "Specify any thirdparty / blockchain reference IDs associated with the transaction (Optional)",
+            :short => 'r',
+            :type => :string,
+            :default => ""},
+           {:name => :percentage,
+            :description => "Percentage of the transaction which actually applies to this profile (for the case of a transaction which spans multiple profiles and should only be counted in part) (Optional)",
+            :short => 'p',
+            :type => :string,
+            :default => "100.0"}
           ]
         end
 
@@ -93,7 +103,7 @@ EOS
           Data.load
           self.error "The account #{source_account}.#{source_currency} does not yet exist" unless Data.account_exists? source_account, source_currency
           self.error "The account #{dest_account}.#{dest_currency} does not yet exist"     unless Data.account_exists? dest_account, dest_currency
-          Data.add_transaction @@options[:date], source_account, source_currency, source_amount, dest_account, dest_currency, dest_amount, fees_account, fees_currency, fees_amount
+          Data.add_transaction @@options[:date], source_account, source_currency, source_amount, dest_account, dest_currency, dest_amount, fees_account, fees_currency, fees_amount, @@options[ :references ], @@options[ :percentage ]
           Data.save
         end
 
