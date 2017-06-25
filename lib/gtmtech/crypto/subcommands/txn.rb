@@ -20,6 +20,9 @@ crypto #{self.prettyname} new --date=<s> --from=<s> --to=<s> [--fees=<s>]
 crypto #{self.prettyname} delete --id=<s>
   - delete a transaction
 
+crypto #{self.prettyname} reconcile
+  - reconcile all transactions
+
 crypto #{self.prettyname} list
   - list all transactions
 
@@ -106,6 +109,11 @@ EOS
           Data.save
         end
 
+        def self.reconcile
+          Data.load
+          Data.reconcile_transactions
+        end
+
         def self.execute
           verb = ARGV.shift
           case verb.downcase
@@ -115,6 +123,8 @@ EOS
             self.list
           when "delete"
             self.delete
+          when "reconcile"
+            self.reconcile
           else
             self.error "transaction takes an action [new, list, delete] . See --help for more info"
           end

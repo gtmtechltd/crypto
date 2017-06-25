@@ -83,6 +83,38 @@ module Gtmtech
         @@document[ "transactions" ].delete( id )        
       end
 
+      def self.reconcile_transactions
+        self.list_transactions
+        puts ""
+        printf("%-20s %-10s %-20s\n", "account", "currency", "amount")
+        puts "-" * 120
+        fees = {}
+        @@document[ "accounts" ].each do | name, account_info |
+          account_info[ "currencies" ].sort.each do | currency |
+            decimal = "0.0"
+            @@document[ "transactions" ].each do |id, txn|
+              if txn[ "fees_account" ] == name and txn[ "fees_currency" ] == currency
+                decimal = Utils.decimal_minus( decimal, txn[ "fees_amount" ] )
+                unless fees.key? currency
+                  fees[ currency ] = "0.0"
+                end
+                fees[ currency ] = Utils.decimal_add( fees[currency], txn[ "fees_amount" ])
+              end
+              if txn[ "source_account" ] == name and txn[ "source_currency" ] == currency
+                decimal = Utils.decimal_minus( decimal, txn[ "source_amount" ] )
+              end
+              if txn[ "dest_account" ] == name and txn[ "dest_currency" ] == currency
+                decimal = Utils.decimal_add( decimal, txn[ "dest_amount" ] )
+              end
+            end
+            printf( "%-20s %-10s %-20s\n", name, currency, decimal )
+          end
+        end
+        fees.keys.sort.each do |currency|
+          printf( "%-20s %-10s %-20s\n", "**FEES**", currency, fees[ currency ] )
+        end
+      end
+
       def self.save
         File.open(@@path, 'w') do |file|
           file.write( @@document.to_yaml )

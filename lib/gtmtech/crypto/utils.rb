@@ -1,4 +1,5 @@
 require 'fileutils'
+require 'bigdecimal'
 
 module Gtmtech
   module Crypto
@@ -56,6 +57,14 @@ module Gtmtech
         else
           digits
         end        
+      end
+
+      def self.decimal_add decimal1, decimal2
+        ( BigDecimal( decimal1 ) + BigDecimal( decimal2 ) ).to_s("F")
+      end
+
+      def self.decimal_minus decimal1, decimal2
+        ( BigDecimal( decimal1 ) - BigDecimal( decimal2 ) ).to_s("F")
       end
 
     end
