@@ -132,11 +132,19 @@ module Gtmtech
           unless currencies.key? currency
             currencies[ currency ] = "0.0"
           end
-          currencies[ currency ] = Utils.decimal_add( currencies[ currency ], fees[ currency ] )
           printf( "%-20s %-10s %-20s\n", "**FEES**", currency, fees[ currency ] )
         end
+
         puts ""
         printf( "%-10s %-20s\n", "currency", "reconciliation" )
+        puts "-" * 120
+        currencies.keys.sort.each do |currency|
+          currency_fees = fees[ currency ] || "0.0"
+          printf( "%-10s %-20s\n", currency, Utils.decimal_add( currencies[ currency ], currency_fees ) )
+        end
+
+        puts ""
+        printf( "%-10s %-20s\n", "currency", "totals" )
         puts "-" * 120
         currencies.keys.sort.each do |currency|
           printf( "%-10s %-20s\n", currency, currencies[ currency ] )
