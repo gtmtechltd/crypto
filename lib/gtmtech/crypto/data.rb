@@ -55,7 +55,7 @@ module Gtmtech
         source_amount = Utils.make_decimal source_amount
         dest_amount = Utils.make_decimal dest_amount
 
-        id = SecureRandom.uuid.to_s
+        id = SecureRandom.uuid.to_s[0..7]
         @@document[ "transactions" ][ id ] = { "date"            => date, 
                                                "source_account"  => source_account,
                                                "source_currency" => source_currency,
@@ -74,7 +74,7 @@ module Gtmtech
         outputs = []
 
         puts "Transactions for profile \"#{ENV['CRYPTO_PROFILE'] || 'main'}\":\n".red
-        cols = "%-36s %-20s %-14s %-15s %-15s %-15s %-12s %-14s %s"
+        cols = "%-10s %-20s %-14s %-15s %-15s %-15s %-12s %-14s %s"
         puts sprintf("#{cols}", 
                       "id", 
                       "date", 
